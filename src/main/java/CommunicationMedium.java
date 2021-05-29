@@ -1,22 +1,28 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+import model.Center;
+import observers.Observer;
+import observers.Subject;
+
+@Slf4j
 public class CommunicationMedium implements Subject {
-    private List<Observer> customers = new ArrayList<>();
+    private List<Observer> subscribers = new ArrayList<>();
 
     @Override
     public void addSubscriber(Observer customer) {
-        customers.add(customer);
+        subscribers.add(customer);
     }
     @Override
     public void removeSubscriber(Observer customer) {
-        customers.remove(customer);
+        subscribers.remove(customer);
     }
     @Override
-    public void notifySubscribers() {
-        System.out.println("New Slots are Available ");
-        for(Observer customer: customers) {
-            customer.update("Book Slots!");
+    public void notifySubscribers(List<Center> availableCenterList) {
+        log.info("New Slots are Available ");
+        for(Observer customer: subscribers) {
+            customer.update(availableCenterList);
         }
     }
 }
